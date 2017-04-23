@@ -79,7 +79,7 @@ I=1*
 Так как мы взяли элемент из массива A, то увеличиваем его счетчик на 1, помечая, что первый элемент этого массива удален. Теперь указатель в массиве А ссылается на второй элемент.
 
 {% highlight pascal %}
-*A: 1 3 5 7 8 9 11 13 15 17
+A: 1 3 5 7 8 9 11 13 15 17
 X:   ^
 X=2
 B: 2 4 6 8 10 12 14 16 18 20
@@ -87,7 +87,7 @@ Y: ^
 Y=1
 С: 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 I:    ^
-I=2*
+I=2
 {% endhighlight %}
 
 Далее берётся А[2]=3 и сравнивается с B[1]=2, выбираем наименьший это 2, ложим его в массив С.
@@ -95,7 +95,7 @@ I=2*
 Счетчик Y увеличиваем на 1. И так далее…
 
 {% highlight pascal %}
-*A: 1 3 5 7 8 9 11 13 15 17
+A: 1 3 5 7 8 9 11 13 15 17
 X:   ^
 X=2
 B: 2 4 6 8 10 12 14 16 18 20
@@ -103,7 +103,7 @@ Y:    ^
 Y=2
 С: 1 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
 I:        ^
-I=3*
+I=3
 {% endhighlight %}
 
 Для того, чтобы не выйти за рамки массивов A и B, нужно следить за их счетчиками x и y соответственно. Так как, если X=11 это означает, все элементы из массива А использованы. Так же и со счетчиком Y в массиве В. В этом случае, если один из массивов стал ’’пустой’’ X=11 или Y=11, тогда нужно просто добавлять все остальные элементы другого массива.
@@ -205,35 +205,36 @@ var
   inc(h);
  end;
 
- begin
-    assign(input, 'input.txt');
+begin
+  assign(input, 'input.txt');
   reset(input);
   assign(output,'output.txt');
   rewrite(output);
-   for i:=1 to 10 do read(a[i]);
-   for i:=1 to 10 do read(b[i]);
-   x:=1;
-   y:=1;
-   for i:=1 to 20 do begin
-    if x>10 then begin
-      addandinc(b[y],i,y);
+  for i:=1 to 10 do read(a[i]);
+  for i:=1 to 10 do read(b[i]);
+  x:=1;
+  y:=1;
+
+  for i:=1 to 20 do begin
+   if x>10 then begin
+    addandinc(b[y],i,y);
     continue;
    end;
 
-    if y>10 then begin
-      addandinc(a[x],i,x);
+   if y>10 then begin
+    addandinc(a[x],i,x);
     continue;
    end;
 
-    if a[x]<b[y] then addandinc(a[x],i,x)
-     else addandinc(b[y],i,y);
+   if a[x]<b[y] then addandinc(a[x],i,x)
+    else addandinc(b[y],i,y);
 
   end;
 
   for i:=1 to 20 do writeln(c[i]);
   close(input);
   close(output);
- end.
+end.
 {% endhighlight %}
 
 Программа  сразу настроена на чтение из файла *input* и вывод в файл *output*.
